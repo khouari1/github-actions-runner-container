@@ -13,7 +13,6 @@ ENV RUNNER_NAME=""
 ENV GITHUB_SERVER=""
 ENV GITHUB_TOKEN=""
 ENV RUNNER_LABELS=""
-ENV RUNNER_OPTIONS=""
 ENV RUNNER_WORK_DIRECTORY="_work"
 ENV RUNNER_ALLOW_RUNASROOT=false
 ENV AGENT_TOOLS_DIRECTORY=/opt/hostedtoolcache
@@ -47,6 +46,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && tar -zxf actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
     && rm -f actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
     && ./bin/installdependencies.sh \
+    && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

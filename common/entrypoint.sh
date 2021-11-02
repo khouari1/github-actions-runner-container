@@ -29,7 +29,6 @@ function getRegistrationToken {
     fi
 }
 
-FINAL_RUNNER_OPTIONS="${RUNNER_OPTIONS}"
 SCOPE=""
 TOKEN=""
 
@@ -64,8 +63,9 @@ elif [[ -n ${RUNNER_REPOSITORY_URL} ]]; then
 fi
 
 # If the user has provided any runner labels add them to the config options
+OPTIONS=${RUNNER_OPTIONS:-""}
 if [[ -n ${RUNNER_LABELS} ]]; then
-    FINAL_RUNNER_OPTIONS="${FINAL_RUNNER_OPTIONS} --labels ${RUNNER_LABELS}"
+    OPTIONS="${OPTIONS} --labels ${RUNNER_LABELS}"
 fi
 
 # The runner group that the self-hosted runner will be registered with

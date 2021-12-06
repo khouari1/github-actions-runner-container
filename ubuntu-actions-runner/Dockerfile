@@ -34,7 +34,7 @@ LABEL \
     github_actions_version=$GH_RUNNER_VERSION
 
 # Create a user for running actions
-RUN useradd -m actions && adduser actions sudo
+#RUN useradd -m actions && echo "actions:actions" | chpasswd && adduser actions sudo
 RUN mkdir -p /home/actions ${AGENT_TOOLS_DIRECTORY}
 WORKDIR /home/actions
 
@@ -57,7 +57,7 @@ COPY common/entrypoint.sh .
 RUN chmod +x ./entrypoint.sh
 
 # Now that the OS has been updated to include required packages, update ownership and then switch to actions user
-RUN chown -R actions:actions /home/actions ${AGENT_TOOLS_DIRECTORY}
+#RUN chown -R actions:actions /home/actions ${AGENT_TOOLS_DIRECTORY}
 
-USER actions
+#USER actions
 CMD [ "./entrypoint.sh" ]

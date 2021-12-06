@@ -34,7 +34,7 @@ LABEL \
     github_actions_version=$GH_RUNNER_VERSION
 
 # Create a user for running actions
-RUN useradd -m actions
+RUN useradd -m actions && adduser actions sudo
 RUN mkdir -p /home/actions ${AGENT_TOOLS_DIRECTORY}
 WORKDIR /home/actions
 
@@ -42,6 +42,7 @@ WORKDIR /home/actions
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install curl jq git -y \
+    && apt-get -y install sudo -y \
     && curl -L -O https://github.com/actions/runner/releases/download/v${GH_RUNNER_VERSION}/actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
     && tar -zxf actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
     && rm -f actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \

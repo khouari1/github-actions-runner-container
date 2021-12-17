@@ -35,4 +35,5 @@ jobs:
            --build-arg COMMIT_SHA=${{ github.sha }} \
            --build-arg CREATED="${{ steps.container_metadata.outputs.datetime }}" \
            --build-arg GH_RUNNER_VERSION="${{ github.event.inputs.runner_version }}" \
+          .
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}

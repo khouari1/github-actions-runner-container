@@ -14,12 +14,6 @@ jobs:
   build:
     runs-on: ubuntu-20.04
 
-    strategy:
-      matrix:
-        os:
-        - centos
-        - ubuntu
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,7 +29,10 @@ jobs:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-          
+
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }}
+          docker build -f ubuntu-actions-runner/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }} \
+           --build-arg COMMIT_SHA=${{ github.sha }} \
+           --build-arg CREATED="${{ steps.container_metadata.outputs.datetime }}" \
+           --build-arg GH_RUNNER_VERSION="${{ github.event.inputs.runner_version }}" \
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}

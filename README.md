@@ -1,22 +1,18 @@
 # Docker Container for GitHub Actions Runner
 
-[![awesome-runners](https://img.shields.io/badge/listed%20on-awesome--runners-blue.svg)](https://github.com/jonico/awesome-runners)
-
-This project will build a Docker container with the specified version of the GitHub Actions Runner installed into it. It is built off of CentOS 8 as a base by default.
+This project will build an Ubuntu Docker container with the GitHub Actions Runner installed into it.
 
 ## Building Container
 You can build this container using the following command:
 
 ```bash
-$ docker build -f [centos-actions-runner|ubuntu-actions-runner]/Dockerfile -t <container_tag> .
+$ docker build -f Dockerfile -t <container_tag> .
 ```
 
 There are some configurable Build Arguments that you can pass in to modify the container build:
 
-* `BASE`: default value `centos:8` or `ubuntu-20.04` depending on the variant, but can be modified to specify an alternative base container image to start from
-* `GH_RUNNER_VERSION`: default value '2.273.0' but can be used to specify an alternative version of the GitHub Actions runner
-
-The Dockerfile has two lines that are hardcoded to use `yum` so you will have to ensure that you use a base container that supports yum if you change it.
+* `BASE`: default value`ubuntu:focal` but can be modified to specify an alternative base container image to start from.
+* `GH_RUNNER_VERSION`: default value '2.285.1' but can be used to specify an alternative version of the GitHub Actions runner.
 
 The GitHub Actions Runner will update itself to the latest version when it gets the first job sent to it if it is running an out of date version. The purpose of this parameter is to be able to set it to a value to test this upgrade scenario.
 A future version of this will access the releases endpoint to get the latest version and use that.

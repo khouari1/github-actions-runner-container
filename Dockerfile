@@ -1,9 +1,5 @@
-FROM ubuntu:focal
-
-# You would typically obtain this latest version from an API endpoint and use that for the runner version
-# as the runner will self update to the latest version when it gets its first job.
-# The reason this is specified is so that we can test the upgrade scenarios using this Dockerfile.
-ARG GH_RUNNER_VERSION=2.285.1
+ARG BASE=ubuntu:focal
+FROM $BASE
 
 ENV RUNNER_NAME=""
 ENV GITHUB_SERVER=""
@@ -23,6 +19,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install curl jq git -y \
     && apt-get -y install sudo -y \
+    && export GH_RUNNER_VERSION = curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/actions/runner/releases/latest | jq -r .tag_name | cut -c 2- \
     && curl -L -O https://github.com/actions/runner/releases/download/v${GH_RUNNER_VERSION}/actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
     && tar -zxf actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
     && rm -f actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \

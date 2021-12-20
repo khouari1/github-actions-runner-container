@@ -32,6 +32,8 @@ function getRegistrationToken {
 SCOPE=""
 TOKEN=""
 
+echo "Github runner version: ${GH_RUNNER_VERSION}"
+
 if [[ -z $GITHUB_SERVER ]]; then
     export API_BASE=https://api.github.com
 else

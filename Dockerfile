@@ -28,7 +28,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && rm -rf /var/lib/apt/lists/* \
 
 RUN apt-get update
-RUN apt-get -y install apt-transport-https ca-certificates
+RUN apt-get -y install apt-transport-https ca-certificates gnupg software-properties-common
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 

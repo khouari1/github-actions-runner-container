@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -30,10 +30,14 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - run: |
-          docker build -f ubuntu-actions-runner/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }} \
+      - name: 'Build image'
+        run: |
+          docker build -f Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }} \
            --build-arg COMMIT_SHA=${{ github.sha }} \
            --build-arg CREATED="${{ steps.container_metadata.outputs.datetime }}" \
            --build-arg GH_RUNNER_VERSION="${{ github.event.inputs.runner_version }}" \
           .
+
+      - name: 'Publish image'
+        run: |
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }}

@@ -50,7 +50,7 @@ if [[ -z "${RUNNER_ENTERPRISE_URL}" && -z "${RUNNER_ORGANIZATION_URL}" && -z "${
     exit 1
 fi
 
-# Use priority of enterprise -> organization -> repoistory if more than one specified
+# Use priority of enterprise -> organization -> repository if more than one specified
 if [[ -n ${RUNNER_ENTERPRISE_URL} ]]; then
     export RUNNER_URL=${RUNNER_ENTERPRISE_URL}
     SCOPE=enterprises

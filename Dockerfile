@@ -26,12 +26,15 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && ./bin/installdependencies.sh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && apt-get update \
-    && apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
-    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
-    && apt-get update \
-    && apt-get -y install docker-ce
+
+RUN apt-get update
+RUN apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+
+RUN apt-get update
+RUN apt-get -y install docker-ce
+RUN docker run hello-world
 
 # Copy out the runsvc.sh script to the root directory for running the service
 RUN cp bin/runsvc.sh . && chmod +x ./runsvc.sh

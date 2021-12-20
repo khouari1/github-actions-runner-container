@@ -10,7 +10,7 @@ ENV RUNNER_ALLOW_RUNASROOT=false
 ENV AGENT_TOOLS_DIRECTORY=/opt/hostedtoolcache
 
 # Create a user for running actions
-RUN useradd -m actions
+#RUN useradd -m actions
 RUN mkdir -p /home/actions ${AGENT_TOOLS_DIRECTORY}
 WORKDIR /home/actions
 
@@ -40,7 +40,7 @@ COPY entrypoint.sh .
 RUN chmod +x ./entrypoint.sh
 
 # Now that the OS has been updated to include required packages, update ownership and then switch to actions user
-RUN chown -R actions:actions /home/actions ${AGENT_TOOLS_DIRECTORY}
+#RUN chown -R actions:actions /home/actions ${AGENT_TOOLS_DIRECTORY}
 
-USER actions
+#USER actions
 CMD [ "./entrypoint.sh" ]

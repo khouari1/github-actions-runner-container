@@ -68,6 +68,8 @@ if [[ -n ${RUNNER_LABELS} ]]; then
     OPTIONS="${OPTIONS} --labels ${RUNNER_LABELS}"
 fi
 
+echo "Options: ${OPTIONS}"
+
 # The runner group that the self-hosted runner will be registered with
 GROUP=${RUNNER_GROUP:-"default"}
 

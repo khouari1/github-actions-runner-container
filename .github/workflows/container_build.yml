@@ -25,4 +25,4 @@ jobs:
 
       - name: Push image
         run: |
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:latest

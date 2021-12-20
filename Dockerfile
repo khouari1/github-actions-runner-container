@@ -25,7 +25,13 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && rm -f actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
     && ./bin/installdependencies.sh \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get update
+    && apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+    && apt-get update
+    && apt-get -y install docker-ce
 
 # Copy out the runsvc.sh script to the root directory for running the service
 RUN cp bin/runsvc.sh . && chmod +x ./runsvc.sh

@@ -4,11 +4,6 @@ name: Container Build
 
 on:
   workflow_dispatch:
-    inputs:
-      runner_version:
-        description: 'Runner version'
-        required: true
-        default: '2.283.3'
 
 jobs:
   build:
@@ -18,25 +13,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-      - name: 'Login via Azure CLI'
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#      - name: Azure login
+#        uses: azure/login@v1
+#        with:
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: 'Build and push image'
+      - name: Azure docker login
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: 'Build image'
+      - name: Build image
         run: |
-          docker build -f Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }} \
-           --build-arg COMMIT_SHA=${{ github.sha }} \
-           --build-arg CREATED="${{ steps.container_metadata.outputs.datetime }}" \
-          .
+          docker build -f Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }} .
 
-      - name: 'Publish image'
+      - name: Publish image
         run: |
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:${{ github.sha }}

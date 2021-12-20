@@ -67,7 +67,6 @@ OPTIONS="${RUNNER_OPTIONS:-""}"
 if [[ -n ${RUNNER_LABELS} ]]; then
     OPTIONS="${OPTIONS} --labels ${RUNNER_LABELS}"
 fi
-
 echo "Options: ${OPTIONS}"
 
 # The runner group that the self-hosted runner will be registered with
@@ -89,7 +88,7 @@ echo "Configuring GitHub Actions Runner and registering"
 echo "Starting GitHub Actions Runner"
 env -i ./runsvc.sh
 
-# Deregister
+# Deregister (in case the runner is not configured to be ephemeral)
 echo Cleaning up runner registration...
 getRegistrationToken
 ./config.sh remove --token "${TOKEN}"

@@ -17,7 +17,7 @@ WORKDIR /home/actions
 # jq is used by the runner to extract the token when registering the runner
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
-    && apt-get install curl jq git -y \
+    && apt-get install curl jq git apt-transport-https ca-certificates gnupg software-properties-common -y \
     && apt-get -y install sudo -y \
     && export GH_RUNNER_VERSION=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/actions/runner/releases/latest | jq -r .tag_name | cut -c 2-) \
     && curl -L -O https://github.com/actions/runner/releases/download/v${GH_RUNNER_VERSION}/actions-runner-linux-x64-${GH_RUNNER_VERSION}.tar.gz \
@@ -27,8 +27,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
 
-RUN apt-get update
-RUN apt-get -y install apt-transport-https ca-certificates gnupg software-properties-common
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 

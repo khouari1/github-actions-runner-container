@@ -30,8 +30,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 # Copy out the runsvc.sh script to the root directory for running the service
 RUN cp bin/runsvc.sh . && chmod +x ./runsvc.sh
 
-COPY ../entrypoint.sh .
-COPY ../start.sh .
+COPY entrypoint.sh .
+COPY start.sh .
 RUN chmod +x ./entrypoint.sh
 RUN chmod +x ./start.sh
 

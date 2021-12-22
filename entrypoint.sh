@@ -89,8 +89,3 @@ echo "Configuring GitHub Actions Runner and registering"
 
 echo "Starting GitHub Actions Runner"
 env -i ./runsvc.sh
-
-# Deregister (in case the runner is not configured to be ephemeral)
-echo Cleaning up runner registration...
-getRegistrationToken
-./config.sh remove --token "${TOKEN}"

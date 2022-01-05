@@ -39,6 +39,7 @@ RUN chmod +x ./entrypoint.sh
 # Now that the OS has been updated to include required packages, update ownership and then switch to actions user
 RUN chown -R actions:actions /home/actions ${AGENT_TOOLS_DIRECTORY}
 
+RUN usermod -d /home/actions actions
+
 USER actions
-ENV HOME /home/actions
 CMD [ "./entrypoint.sh" ]

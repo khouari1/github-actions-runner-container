@@ -10,7 +10,9 @@ ENV RUNNER_ALLOW_RUNASROOT=false
 ENV AGENT_TOOLS_DIRECTORY=/opt/hostedtoolcache
 
 # Create a user for running actions
-RUN useradd -m actions && echo "actions:docker" | chpasswd && adduser actions sudo
+RUN adduser --disabled-password --gecos '' actions
+RUN adduser actions sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /home/actions ${AGENT_TOOLS_DIRECTORY}
 WORKDIR /home/actions
 

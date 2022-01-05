@@ -19,10 +19,18 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build image
+      - name: Build runner image
+        run: |
+          docker build -f plain/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:latest .
+
+      - name: Push runner image
+        run: |
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner:latest
+
+      - name: Build postgres image
         run: |
           docker build -f postgres/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner-postgres:latest .
 
-      - name: Push image
+      - name: Push postgres image
         run: |
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/github-runner-postgres:latest

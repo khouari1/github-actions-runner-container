@@ -10,7 +10,7 @@ ENV RUNNER_ALLOW_RUNASROOT=false
 ENV AGENT_TOOLS_DIRECTORY=/opt/hostedtoolcache
 
 # Create a user for running actions
-RUN useradd -m actions
+RUN useradd -m actions && echo "actions:docker" | chpasswd && adduser actions sudo
 RUN mkdir -p /home/actions ${AGENT_TOOLS_DIRECTORY}
 WORKDIR /home/actions
 

@@ -77,6 +77,9 @@ GROUP=${RUNNER_GROUP:-"default"}
 echo "Getting temporary access token for registering"
 getRegistrationToken
 
+echo "HOME:"
+echo $HOME
+
 echo "Configuring GitHub Actions Runner and registering"
 ./config.sh \
     --unattended \

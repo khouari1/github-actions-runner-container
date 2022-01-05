@@ -40,4 +40,5 @@ RUN chmod +x ./entrypoint.sh
 RUN chown -R actions:actions /home/actions ${AGENT_TOOLS_DIRECTORY}
 
 USER actions
+ENV HOME /home/actions
 CMD [ "./entrypoint.sh" ]

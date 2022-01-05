@@ -10,8 +10,7 @@ ENV RUNNER_ALLOW_RUNASROOT=false
 ENV AGENT_TOOLS_DIRECTORY=/opt/hostedtoolcache
 
 # Create a user for running actions
-RUN useradd -m actions && adduser actions sudo
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m actions
 RUN mkdir -p /home/actions ${AGENT_TOOLS_DIRECTORY}
 WORKDIR /home/actions
 
@@ -27,6 +26,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && ./bin/installdependencies.sh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+RUN adduser actions sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Copy out the runsvc.sh script to the root directory for running the service
 RUN cp bin/runsvc.sh . && chmod +x ./runsvc.sh

@@ -10,8 +10,7 @@ ENV RUNNER_ALLOW_RUNASROOT=false
 ENV AGENT_TOOLS_DIRECTORY=/opt/hostedtoolcache
 
 # Create a user for running actions
-RUN adduser --disabled-password --gecos '' actions
-RUN adduser actions sudo
+RUN useradd -m actions && adduser actions sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /home/actions ${AGENT_TOOLS_DIRECTORY}
 WORKDIR /home/actions

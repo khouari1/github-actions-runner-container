@@ -32,6 +32,8 @@ function getRegistrationToken {
 SCOPE=""
 TOKEN=""
 
+export HOME=/home/actions
+
 echo "Github runner version: ${GH_RUNNER_VERSION}"
 
 if [[ -z $GITHUB_SERVER ]]; then
@@ -76,9 +78,6 @@ GROUP=${RUNNER_GROUP:-"default"}
 
 echo "Getting temporary access token for registering"
 getRegistrationToken
-
-echo "HOME:"
-echo $HOME
 
 echo "Configuring GitHub Actions Runner and registering"
 ./config.sh \
